@@ -7,7 +7,7 @@ class Users extends Component {
     currentUser: {}
   }
 
-  componentDidMount() {
+  componentDidMount () {
     const token = localStorage.getItem('jwt')
     // const currentUser = localStorage.getItem('user').JSON()
     const requestOptions = { headers: { authorization: token } }
@@ -19,25 +19,25 @@ class Users extends Component {
       .catch(err => console.log(err))
   }
 
-  render() {
+  render () {
     const { users, currentUser } = this.state
     const { history } = this.props
-    const dptUsers = users.map(user => user.department === currentUser.department)
+    const dptUsers = users.map(
+      user => user.department === currentUser.department
+    )
     return (
       <div className='Users'>
-        {localStorage.getItem('jwt') ? (
-          <div>
+        {localStorage.getItem('jwt')
+          ? <div>
             <button onClick={this.handleButtonClick}>Logout</button>
             <ul>
               {users.map(user => <li key={user.id}>{user.username}</li>)}
             </ul>
           </div>
-        ) : (
-            <h2>
+          : <h2>
               Route access is restricted. Redirecting to /signin route
-              {setTimeout(() => history.push('/signin'), 3000)}
-            </h2>
-          )}
+            {setTimeout(() => history.push('/signin'), 3000)}
+          </h2>}
       </div>
     )
   }

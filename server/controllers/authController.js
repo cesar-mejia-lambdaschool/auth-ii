@@ -42,15 +42,14 @@ module.exports = {
       .where({ username })
       .first()
       .then(user => {
-        bcrypt.compare(password, user.password)
-          .then(isPasswordValid => {
-            if (isPasswordValid) {
-              const token = generateToken(user)
-              return res.status(200).json({ msg: 'login successful', token, department, user })
-            } else {
-              return res.status(401).json({ msg: 'login failed' })
-            }
-          })
+        bcrypt.compare(password, user.password).then(isPasswordValid => {
+          if (isPasswordValid) {
+            const token = generateToken(user)
+            res.status(200).json({ msg: 'login successful', token, user })
+          } else {
+            res.status(401).json({ msg: 'login failed' })
+          }
+        })
       })
       .catch(next)
   }

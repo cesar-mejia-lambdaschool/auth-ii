@@ -10,8 +10,8 @@ require('./routes')(server)
 //* Error Handler
 server.use(errorHandler)
 
-const port = process.env.PORT || 8080
-
+const port = process.env.PORT || 8000
+console.log(process.env.PORT)
 //* "Sanity Check"
 server.get('/', (req, res) => {
   res.status(200).send(' 🇳🇮 Server Listens and Obeys 🤦‍♀')
