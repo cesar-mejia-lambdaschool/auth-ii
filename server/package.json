@@ -2,9 +2,9 @@
   "name": "auth-ii",
   "version": "0.0.0",
   "description": "auth with jwt + react",
-  "main": "server.js",
+  "main": "index.js",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon"
   },
   "repository": {
     "type": "git",
@@ -21,6 +21,7 @@
     "cors": "^2.8.4",
     "dotenv": "^6.0.0",
     "express": "^4.16.3",
+    "express-rate-limit": "^3.3.2",
     "helmet": "^3.13.0",
     "jsonwebtoken": "^8.3.0",
     "knex": "^0.15.2",

@@ -21,7 +21,7 @@ class Signup extends Component {
           value={username}
           onChange={this.handleInputChange}
         />
-        <label>Passoword: </label>
+        <label>Password: </label>
         <input
           name='password'
           type='password'
@@ -33,7 +33,7 @@ class Signup extends Component {
         <input
           name='department'
           type='text'
-          placeholder='Enter deparment'
+          placeholder='Enter department'
           value={department}
           onChange={this.handleInputChange}
         />
@@ -41,6 +41,7 @@ class Signup extends Component {
       </form>
     )
   }
+
   handleInputChange = ({ target }) => {
     const { name, value } = target
     this.setState({
@@ -48,14 +49,14 @@ class Signup extends Component {
     })
   }
 
-  handleFormSubmit = (e) => {
+  handleFormSubmit = e => {
     e.preventDefault()
 
-    axios.post('http://localhost:8000/api/register', this.state)
+    axios
+      .post('http://localhost:8000/api/register', this.state)
       .then(res => {
-        const { token, user } = res.data
+        const { token } = res.data
         localStorage.setItem('jwt', token)
-        localStorage.setItem('user', JSON.stringify(user))
         this.setState({
           username: '',
           password: '',

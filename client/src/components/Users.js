@@ -9,7 +9,6 @@ class Users extends Component {
 
   componentDidMount () {
     const token = localStorage.getItem('jwt')
-    // const currentUser = localStorage.getItem('user').JSON()
     const requestOptions = { headers: { authorization: token } }
     axios
       .get('http://localhost:8000/api/users', requestOptions)
@@ -27,17 +26,21 @@ class Users extends Component {
     )
     return (
       <div className='Users'>
-        {localStorage.getItem('jwt')
-          ? <div>
+        {localStorage.getItem('jwt') ? (
+          <div>
             <button onClick={this.handleButtonClick}>Logout</button>
             <ul>
-              {users.map(user => <li key={user.id}>{user.username}</li>)}
+              {users.map(user => (
+                <li key={user.id}>{user.username}</li>
+              ))}
             </ul>
           </div>
-          : <h2>
-              Route access is restricted. Redirecting to /signin route
+        ) : (
+          <h2>
+            Route is restricted. Redirecting to /signin route.
             {setTimeout(() => history.push('/signin'), 3000)}
-          </h2>}
+          </h2>
+        )}
       </div>
     )
   }

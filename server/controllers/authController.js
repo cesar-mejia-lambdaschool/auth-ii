@@ -5,9 +5,11 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 //* Generate token
-function generateToken ({ id }) {
+function generateToken ({ id, username, department }) {
   const payload = {
-    jwtid: id
+    jwtid: id,
+    username: username,
+    department: department
   }
   const options = {
     expiresIn: '1h'
@@ -29,7 +31,7 @@ module.exports = {
       .insert(user)
       .then(ids => {
         const token = generateToken(user)
-        res.status(201).json({ msg: 'Registration Successful!', token, user })
+        res.status(201).json({ msg: 'Registration Successful!', token })
       })
       .catch(next)
   },
@@ -45,7 +47,7 @@ module.exports = {
         bcrypt.compare(password, user.password).then(isPasswordValid => {
           if (isPasswordValid) {
             const token = generateToken(user)
-            res.status(200).json({ msg: 'login successful', token, user })
+            res.status(200).json({ msg: 'login successful', token })
           } else {
             res.status(401).json({ msg: 'login failed' })
           }

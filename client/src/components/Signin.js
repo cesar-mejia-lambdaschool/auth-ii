@@ -7,19 +7,6 @@ class Signin extends Component {
     password: ''
   }
 
-  componentDidMount () {
-    const token = localStorage.getItem('jwt')
-
-    const requestOptions = { headers: { authorization: token } }
-
-    axios
-      .get('http://localhost:8000/api/users', requestOptions)
-      .then(res => {
-        this.setState({ users: res.data })
-      })
-      .catch(err => console.error(err))
-  }
-
   render (props) {
     const { username, password } = this.state
 
@@ -43,7 +30,7 @@ class Signin extends Component {
           />
           <button type='submit'>Login</button>
         </form>
-      </div >
+      </div>
     )
   }
 
@@ -54,15 +41,14 @@ class Signin extends Component {
     })
   }
 
-  handleFormSubmit = (e) => {
+  handleFormSubmit = e => {
     e.preventDefault()
 
     axios
       .post('http://localhost:8000/api/login', this.state)
       .then(res => {
-        const { token, user } = res.data
+        const { token } = res.data
         localStorage.setItem('jwt', token)
-        localStorage.setItem('user', JSON.stringify(user))
         this.props.history.push('/users')
       })
       .catch(err => {
