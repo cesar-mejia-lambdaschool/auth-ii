@@ -12,7 +12,11 @@ class Signup extends Component {
     const { username, password, department } = this.state
 
     return (
-      <form type='submit' onSubmit={this.handleFormSubmit}>
+      <form
+        type='submit'
+        onSubmit={this.handleFormSubmit}
+        style={{ display: 'flex', flexDirection: 'column', width: '200px' }}
+      >
         <label>Username: </label>
         <input
           name='username'
@@ -20,6 +24,7 @@ class Signup extends Component {
           placeholder='Enter username'
           value={username}
           onChange={this.handleInputChange}
+          style={{ marginBottom: 10, height: 20 }}
         />
         <label>Password: </label>
         <input
@@ -28,6 +33,7 @@ class Signup extends Component {
           placeholder='Enter password'
           value={password}
           onChange={this.handleInputChange}
+          style={{ marginBottom: 10, height: 20 }}
         />
         <label>Department: </label>
         <input
@@ -36,8 +42,11 @@ class Signup extends Component {
           placeholder='Enter department'
           value={department}
           onChange={this.handleInputChange}
+          style={{ marginBottom: 10, height: 20 }}
         />
-        <button type='submit'>Signup</button>
+        <button style={{ height: 30 }} type='submit'>
+          Signup
+        </button>
       </form>
     )
   }

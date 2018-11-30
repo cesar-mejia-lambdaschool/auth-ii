@@ -1,10 +1,11 @@
 import React, { Component } from 'react'
+import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 
 class Users extends Component {
   state = {
     users: [],
-    currentUser: {}
+    loggedIn: false
   }
 
   componentDidMount () {
@@ -13,20 +14,16 @@ class Users extends Component {
     axios
       .get('http://localhost:8000/api/users', requestOptions)
       .then(res => {
-        this.setState({ users: res.data })
+        this.setState({ users: res.data, loggedIn: true })
       })
       .catch(err => console.log(err))
   }
 
   render () {
-    const { users, currentUser } = this.state
-    const { history } = this.props
-    const dptUsers = users.map(
-      user => user.department === currentUser.department
-    )
+    const { users, loggedIn } = this.state
     return (
       <div className='Users'>
-        {localStorage.getItem('jwt') ? (
+        {loggedIn ? (
           <div>
             <button onClick={this.handleButtonClick}>Logout</button>
             <ul>
@@ -36,19 +33,24 @@ class Users extends Component {
             </ul>
           </div>
         ) : (
-          <h2>
-            Route is restricted. Redirecting to /signin route.
-            {setTimeout(() => history.push('/signin'), 3000)}
-          </h2>
+          <div>
+            <h2>Route access is restricted. Redirecting to /signin route.</h2>
+            {this.redirect()}
+          </div>
         )}
       </div>
     )
   }
 
+  redirect = () => {
+    setTimeout(() => this.props.history.push('/signin'), 2000)
+  }
+
   handleButtonClick = () => {
     localStorage.removeItem('jwt')
+    this.setState({ loggedIn: false, users: [] })
     this.props.history.push('/signin')
   }
 }
 
-export default Users
+export default withRouter(Users)

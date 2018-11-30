@@ -9,12 +9,23 @@ import Users from './Users'
 class App extends Component {
   render () {
     return (
-      <div className='App'>
+      <div className='App' style={{ marginLeft: '20px' }}>
         <header>
-          <nav style={{ display: 'flex', flexDirection: 'column' }}>
-            <Link to='/signup'>Register</Link>
-            <Link to='/signin'>Sign In</Link>
-            <Link to='/users'>Users</Link>
+          <nav
+            style={{
+              display: 'flex',
+              marginBottom: '20px'
+            }}
+          >
+            <Link style={{ marginRight: '20px' }} to='/signup'>
+              Register
+            </Link>
+            <Link style={{ marginRight: '20px' }} to='/signin'>
+              Sign In
+            </Link>
+            <Link style={{ marginRight: '20px' }} to='/users'>
+              Users
+            </Link>
           </nav>
         </header>
         <Route exact path='/' component={Home} />

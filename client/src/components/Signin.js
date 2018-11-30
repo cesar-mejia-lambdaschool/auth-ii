@@ -12,7 +12,10 @@ class Signin extends Component {
 
     return (
       <div className='Signin'>
-        <form onSubmit={this.handleFormSubmit}>
+        <form
+          onSubmit={this.handleFormSubmit}
+          style={{ display: 'flex', flexDirection: 'column', width: '200px' }}
+        >
           <label>Username:</label>
           <input
             name='username'
@@ -20,15 +23,20 @@ class Signin extends Component {
             placeholder='Enter username'
             value={username}
             onChange={this.handleInputChange}
+            style={{ marginBottom: 10, height: 20 }}
           />
+          <label>Password:</label>
           <input
             name='password'
             type='password'
             placeholder='Enter password'
             value={password}
             onChange={this.handleInputChange}
+            style={{ marginBottom: 10, height: 20 }}
           />
-          <button type='submit'>Login</button>
+          <button style={{ height: 30 }} type='submit'>
+            Login
+          </button>
         </form>
       </div>
     )
