@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 class Signin extends Component {
   state = {
     username: '',
@@ -55,8 +55,6 @@ class Signin extends Component {
     axios
       .post('http://localhost:8000/api/login', this.state)
       .then(res => {
-        const { token } = res.data
-        localStorage.setItem('jwt', token)
         this.props.history.push('/users')
       })
       .catch(err => {

@@ -12,14 +12,17 @@ function generateToken ({ id, username, department }) {
     department: department
   }
   const options = {
-    expiresIn: '1h'
+    expiresIn: 15 * 60 * 1000
   }
-  return jwt.sign(payload, process.env.SECRET, options)
+  return jwt.sign(payload, process.env.JWT_SECRET, options)
 }
 
 //* Verify token
 
 module.exports = {
+  // # place jwt token on req.session
+  // # req.session made available by cookie-session)
+
   registerUser: (req, res, next) => {
     const user = req.body
 
@@ -31,7 +34,9 @@ module.exports = {
       .insert(user)
       .then(ids => {
         const token = generateToken(user)
-        res.status(201).json({ msg: 'Registration Successful!', token })
+        //* token placed here
+        req.session.token = token
+        res.status(201).json({ msg: 'Registration Successful!' })
       })
       .catch(next)
   },
@@ -47,12 +52,20 @@ module.exports = {
         bcrypt.compare(password, user.password).then(isPasswordValid => {
           if (isPasswordValid) {
             const token = generateToken(user)
-            res.status(200).json({ msg: 'login successful', token })
+            req.session.token = token
+            res.status(200).json({ msg: 'login successful' })
           } else {
             res.status(401).json({ msg: 'login failed' })
           }
         })
       })
       .catch(next)
+  },
+
+  logoutUser: (req, res, next) => {
+    if (req.session) {
+      req.session = null
+      res.status(200).json('message: cookie destroyed')
+    }
   }
 }

@@ -1,29 +1,32 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 class Users extends Component {
   state = {
     users: [],
-    loggedIn: false
+    loggedIn: false,
+    fetching: true
   }
 
   componentDidMount () {
-    const token = localStorage.getItem('jwt')
-    const requestOptions = { headers: { authorization: token } }
+    this.setState({ fetching: true })
     axios
-      .get('http://localhost:8000/api/users', requestOptions)
+      .get('http://localhost:8000/api/users')
       .then(res => {
-        this.setState({ users: res.data, loggedIn: true })
+        this.setState({ users: res.data, loggedIn: true, fetching: false })
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        this.setState({ loggedIn: false, fetching: false })
+        console.error(err)
+      })
   }
 
   render () {
-    const { users, loggedIn } = this.state
+    const { users, loggedIn, fetching } = this.state
     return (
       <div className='Users'>
-        {loggedIn ? (
+        {!fetching && loggedIn ? (
           <div>
             <button onClick={this.handleButtonClick}>Logout</button>
             <ul>
@@ -34,8 +37,14 @@ class Users extends Component {
           </div>
         ) : (
           <div>
-            <h2>Route access is restricted. Redirecting to /signin route.</h2>
-            {this.redirect()}
+            {fetching ? (
+              <h2>Loading</h2>
+            ) : (
+              <div>
+                You must login to access this resource. Redirecting to /signin.
+                {this.redirect()}
+              </div>
+            )}
           </div>
         )}
       </div>
@@ -43,13 +52,19 @@ class Users extends Component {
   }
 
   redirect = () => {
-    setTimeout(() => this.props.history.push('/signin'), 2000)
+    setTimeout(() => this.props.history.push('/signin'), 3000)
   }
 
   handleButtonClick = () => {
-    localStorage.removeItem('jwt')
-    this.setState({ loggedIn: false, users: [] })
-    this.props.history.push('/signin')
+    axios
+      .get('http://localhost:8000/api/logout')
+      .then(() => {
+        this.setState(
+          { loggedIn: false, users: [], fetching: false },
+          this.props.history.push('/signin')
+        )
+      })
+      .catch(err => console.log(err))
   }
 }
 

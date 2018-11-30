@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 class Signup extends Component {
   state = {
     username: '',
@@ -64,8 +64,6 @@ class Signup extends Component {
     axios
       .post('http://localhost:8000/api/register', this.state)
       .then(res => {
-        const { token } = res.data
-        localStorage.setItem('jwt', token)
         this.setState({
           username: '',
           password: '',

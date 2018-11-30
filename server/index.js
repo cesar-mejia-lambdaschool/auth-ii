@@ -6,7 +6,7 @@ server.get('/', (req, res) => {
 })
 
 //* Server Listens on PORT
-const PORT = process.env.PORT || 8080
+const PORT = process.env.PORT || 8000
 server.listen(PORT, () => {
   console.log(`\n 💩  === Server Listens and Obeys on port ${PORT} === 🦄 \n`)
 })

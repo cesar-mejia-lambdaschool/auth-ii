@@ -7,5 +7,6 @@ import App from './components/App'
 render(
   <Router>
     <App />
-  </Router >,
-  document.getElementById('root'))
+  </Router>,
+  document.getElementById('root')
+)
