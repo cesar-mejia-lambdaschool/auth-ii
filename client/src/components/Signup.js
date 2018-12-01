@@ -45,8 +45,9 @@ class Signup extends Component {
           style={{ marginBottom: 10, height: 20 }}
         />
         <button style={{ height: 30 }} type='submit'>
-          Signup
+          Submit
         </button>
+        <button style={{ height: 30, marginTop: 10 }}>GitHub</button>
       </form>
     )
   }

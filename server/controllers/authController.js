@@ -17,13 +17,10 @@ function generateToken ({ id, username, department }) {
   return jwt.sign(payload, process.env.SECRET, options)
 }
 
-//* Verify token
-
 module.exports = {
   registerUser: (req, res, next) => {
     const user = req.body
 
-    //* Hash password
     const hash = bcrypt.hashSync(user.password, 14)
     user.password = hash
 
