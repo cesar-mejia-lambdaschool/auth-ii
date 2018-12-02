@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 class Signup extends Component {
   state = {
     username: '',
@@ -47,11 +47,19 @@ class Signup extends Component {
         <button style={{ height: 30 }} type='submit'>
           Submit
         </button>
-        <button style={{ height: 30, marginTop: 10 }}>GitHub</button>
+        <button
+          style={{ height: 30, marginTop: 10 }}
+          onClick={this.handleGitHubClick}
+        >
+          GitHub
+        </button>
       </form>
     )
   }
 
+  handleGitHubClick = () => {
+    axios.get('http://localhost:8000/api/auth/github')
+  }
   handleInputChange = ({ target }) => {
     const { name, value } = target
     this.setState({
@@ -65,8 +73,6 @@ class Signup extends Component {
     axios
       .post('http://localhost:8000/api/register', this.state)
       .then(res => {
-        const { token } = res.data
-        localStorage.setItem('jwt', token)
         this.setState({
           username: '',
           password: '',

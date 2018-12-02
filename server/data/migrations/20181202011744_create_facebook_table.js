@@ -1,14 +1,12 @@
 exports.up = function (knex, Promise) {
-  return knex.schema.createTable('github', table => {
+  return knex.schema.createTable('facebook', table => {
     table
       .integer('id')
       .primary()
       .unique()
       .notNull()
-    table
-      .string('username')
-      .notNull()
-      .unique()
+    table.string('givenName')
+    table.string('familyName ')
     table.string('displayName')
     table.string('email').unique()
     table.string('photo')
@@ -16,5 +14,5 @@ exports.up = function (knex, Promise) {
 }
 
 exports.down = function (knex, Promise) {
-  return knex.schema.dropTableIfExists('github')
+  return knex.schema.dropTableIfExists('facebook')
 }

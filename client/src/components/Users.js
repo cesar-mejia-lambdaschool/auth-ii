@@ -1,31 +1,34 @@
 import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
-
+axios.defaults.withCredentials = true
 class Users extends Component {
   state = {
     users: [],
+    user: null,
     loggedIn: false
   }
 
   componentDidMount () {
-    const token = localStorage.getItem('jwt')
-    const requestOptions = { headers: { authorization: token } }
     axios
-      .get('http://localhost:8000/api/users', requestOptions)
+      .get('http://localhost:8000/api/users')
       .then(res => {
-        this.setState({ users: res.data, loggedIn: true })
+        const { users, user } = res.data
+        this.setState({ users, loggedIn: true, user })
       })
       .catch(err => console.log(err))
   }
 
   render () {
-    const { users, loggedIn } = this.state
+    const { user, users, loggedIn } = this.state
     return (
       <div className='Users'>
         {loggedIn ? (
           <div>
             <button onClick={this.handleButtonClick}>Logout</button>
+            <br />
+            {user && <img height='50' src={user.photo} alt='profile' />}
+
             <ul>
               {users.map(user => (
                 <li key={user.id}>{user.username}</li>
@@ -35,7 +38,6 @@ class Users extends Component {
         ) : (
           <div>
             <h2>Route access is restricted. Redirecting to /signin route.</h2>
-            {this.redirect()}
           </div>
         )}
       </div>
@@ -47,9 +49,15 @@ class Users extends Component {
   }
 
   handleButtonClick = () => {
-    localStorage.removeItem('jwt')
-    this.setState({ loggedIn: false, users: [] })
-    this.props.history.push('/signin')
+    axios
+      .get('http://localhost:8000/api/logout')
+      .then(res => {
+        this.setState(
+          { loggedIn: false, users: [], user: null },
+          this.props.history.push('/signin')
+        )
+      })
+      .catch(err => console.error(err))
   }
 }
 
