@@ -40,7 +40,7 @@ module.exports = {
       })
       .catch(next)
   },
-  logout: (req, res, next) => {
+  logoutUser: (req, res, next) => {
     res.session = null
     req.logout()
     res.status(200).json({ msg: 'all okay' })

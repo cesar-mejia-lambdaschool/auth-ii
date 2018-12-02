@@ -30,7 +30,7 @@ class Users extends Component {
           <div>
             <button onClick={this.handleButtonClick}>Logout</button>
             <br />
-            {user && <img height='50' src={user.photo} alt='profile' />}
+            {user && <img height='100' src={user.photo} alt='profile' />}
             <ul>
               {users.map(user => (
                 <li key={user.id}>{user.username}</li>

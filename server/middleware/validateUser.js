@@ -15,10 +15,6 @@ const util = require('util')
 const jwtVerifyAsync = util.promisify(jwt.verify)
 
 async function validateUser (req, res, next) {
-  // const token = req.headers.authorization
-  console.log('\n 💯', req.session)
-  console.log('\n 🥇', req.user)
-
   const token = req.session.token
   if (!token) {
     return res.status(401).json({ error: 'you shall not pass!! - no token' })
@@ -27,12 +23,9 @@ async function validateUser (req, res, next) {
   try {
     const decodedToken = await jwtVerifyAsync(token, process.env.JWT_SECRET)
     req.payload = decodedToken
-    console.log('\ndecode successful\n')
     next()
   } catch (err) {
-    res
-      .status(401)
-      .json({ error: 'you  shall not pass!! - token invalid', err })
+    res.status(401).json({ error: 'you  shall not pass!! - token invalid', err })
   }
 }
 
