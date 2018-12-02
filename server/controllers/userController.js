@@ -8,6 +8,6 @@ module.exports = {
       .then(users => {
         res.status(200).json({ users, user })
       })
-      .catch(err => console.log(err))
+      .catch(err => res.status(403).json({ message: 'must login', err }))
   }
 }

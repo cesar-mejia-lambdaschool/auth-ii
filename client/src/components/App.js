@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import { Link, Route } from 'react-router-dom'
 
 import Home from './Home'
-import Signin from './Signin'
-import Signup from './Signup'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 import Users from './Users'
 
 class App extends Component {
@@ -29,8 +29,8 @@ class App extends Component {
           </nav>
         </header>
         <Route exact path='/' component={Home} />
-        <Route path='/signup' render={props => <Signup {...props} />} />
-        <Route path='/signin' render={props => <Signin {...props} />} />
+        <Route path='/signup' render={props => <SignUp {...props} />} />
+        <Route path='/signin' render={props => <SignIn {...props} />} />
         <Route path='/users' render={props => <Users {...props} />} />
       </div>
     )

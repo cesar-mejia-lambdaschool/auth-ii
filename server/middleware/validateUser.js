@@ -25,7 +25,7 @@ async function validateUser (req, res, next) {
   }
 
   try {
-    const decodedToken = await jwtVerifyAsync(token, process.env.SECRET)
+    const decodedToken = await jwtVerifyAsync(token, process.env.JWT_SECRET)
     req.payload = decodedToken
     console.log('\ndecode successful\n')
     next()

@@ -6,7 +6,8 @@ class Users extends Component {
   state = {
     users: [],
     user: null,
-    loggedIn: false
+    loggedIn: false,
+    loading: true
   }
 
   componentDidMount () {
@@ -14,21 +15,22 @@ class Users extends Component {
       .get('http://localhost:8000/api/users')
       .then(res => {
         const { users, user } = res.data
-        this.setState({ users, loggedIn: true, user })
+        this.setState({ users, loggedIn: true, user, loading: false })
       })
-      .catch(err => console.log(err))
+      .catch(err => {
+        this.setState({ loading: false, loggedIn: false })
+      })
   }
 
   render () {
-    const { user, users, loggedIn } = this.state
+    const { user, users, loggedIn, loading } = this.state
     return (
       <div className='Users'>
-        {loggedIn ? (
+        {loggedIn && !loading ? (
           <div>
             <button onClick={this.handleButtonClick}>Logout</button>
             <br />
             {user && <img height='50' src={user.photo} alt='profile' />}
-
             <ul>
               {users.map(user => (
                 <li key={user.id}>{user.username}</li>
@@ -37,7 +39,12 @@ class Users extends Component {
           </div>
         ) : (
           <div>
-            <h2>Route access is restricted. Redirecting to /signin route.</h2>
+            {loading ? (
+              <h2>Loading</h2>
+            ) : (
+              <h2>Route access is restricted. Redirecting to /signin route.</h2>
+            )}
+            {!loading && !loggedIn && this.redirect()}
           </div>
         )}
       </div>
@@ -48,15 +55,14 @@ class Users extends Component {
     setTimeout(() => this.props.history.push('/signin'), 2000)
   }
 
-  handleButtonClick = () => {
+  handleButtonClick = e => {
+    e.preventDefault()
     axios
       .get('http://localhost:8000/api/logout')
       .then(res => {
-        this.setState(
-          { loggedIn: false, users: [], user: null },
-          this.props.history.push('/signin')
-        )
+        this.setState({ loggedIn: false, users: [], user: null })
       })
+      .then(() => this.props.history.push('/signin'))
       .catch(err => console.error(err))
   }
 }

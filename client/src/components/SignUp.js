@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import SocialLinks from '../components/SocialLinks'
 axios.defaults.withCredentials = true
 class Signup extends Component {
   state = {
@@ -15,7 +16,7 @@ class Signup extends Component {
       <form
         type='submit'
         onSubmit={this.handleFormSubmit}
-        style={{ display: 'flex', flexDirection: 'column', width: '200px' }}
+        style={{ display: 'flex', flexDirection: 'column', width: '250px' }}
       >
         <label>Username: </label>
         <input
@@ -47,19 +48,11 @@ class Signup extends Component {
         <button style={{ height: 30 }} type='submit'>
           Submit
         </button>
-        <button
-          style={{ height: 30, marginTop: 10 }}
-          onClick={this.handleGitHubClick}
-        >
-          GitHub
-        </button>
+        <SocialLinks action='Register' />
       </form>
     )
   }
 
-  handleGitHubClick = () => {
-    axios.get('http://localhost:8000/api/auth/github')
-  }
   handleInputChange = ({ target }) => {
     const { name, value } = target
     this.setState({

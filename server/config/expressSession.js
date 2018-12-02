@@ -2,7 +2,7 @@ require('dotenv').config()
 
 module.exports = {
   name: 'tacos', //* no one will look for my tacos key
-  secret: process.env.SECRET,
+  secret: process.env.SESSION_SECRET,
   httpOnly: true,
   resave: false,
   saveUninitialized: false,
