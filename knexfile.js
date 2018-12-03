@@ -15,6 +15,7 @@ module.exports = {
     migrations: {
       directory: './db/migrations'
     },
-    useNullAsDefault: true
+    useNullAsDefault: true,
+    debug: true
   }
 }
