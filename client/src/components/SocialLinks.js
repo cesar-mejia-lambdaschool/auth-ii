@@ -6,8 +6,7 @@ import {
 } from 'react-social-login-buttons'
 
 const SocialLinks = props => {
-  const authURL = `${process.env.REACT_APP_SERVER_API}/auth`
-
+  const authURL = 'http://localhost:8000/api/auth'
   return (
     <Fragment>
       <FacebookLoginButton onClick={() => (window.location.href = `${authURL}/facebook`)}>

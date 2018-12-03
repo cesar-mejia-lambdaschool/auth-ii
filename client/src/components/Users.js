@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 axios.defaults.withCredentials = true
-const initialState
+const serverAPI = 'http://localhost:8000/api'
 class Users extends Component {
   state = {
     user: null,
@@ -13,7 +12,7 @@ class Users extends Component {
 
   componentDidMount () {
     axios
-      .get(`${process.env.REACT_APP_SERVER_API}/users`)
+      .get(`${serverAPI}/users`)
       .then(res => {
         const { users, user } = res.data
         this.setState({ user, users, loggedIn: true, loading: false })
@@ -59,11 +58,11 @@ class Users extends Component {
   handleButtonClick = e => {
     e.preventDefault()
     axios
-      .get(`${process.env.REACT_APP_SERVER_API}/logout`)
+      .get(`${serverAPI}/logout`)
       .then(res => this.setState({ loggedIn: false, users: [], user: null }))
       .then(() => this.props.history.push('/signin'))
       .catch(err => console.error(err))
   }
 }
 
-export default withRouter(Users)
+export default Users

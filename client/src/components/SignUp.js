@@ -3,6 +3,8 @@ import axios from 'axios'
 import SocialLinks from '../components/SocialLinks'
 axios.defaults.withCredentials = true
 const initialState = { username: '', password: '', department: '' }
+const serverAPI = 'http://localhost:8000/api'
+
 class Signup extends Component {
   state = initialState
 
@@ -61,7 +63,7 @@ class Signup extends Component {
     e.preventDefault()
 
     axios
-      .post(`${process.env.REACT_APP_SERVER_API}/register`, this.state)
+      .post(`${serverAPI}/register`, this.state)
       .then(res => this.setState(initialState))
       .then(() => this.props.history.push('/users'))
       .catch(err => console.error(err))
