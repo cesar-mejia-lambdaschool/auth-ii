@@ -5,7 +5,7 @@ import {
   GithubLoginButton
 } from 'react-social-login-buttons'
 const SocialLinks = props => {
-  const authURL = 'https://guarded-sands-18679.herokuapp.com'
+  const authURL = 'https://guarded-sands-18679.herokuapp.com/api/auth'
   // const authURL = 'http://localhost:8000/api/auth'
   return (
     <Fragment>
