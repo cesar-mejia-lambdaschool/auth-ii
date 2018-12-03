@@ -4,7 +4,7 @@ module.exports = {
   secret: process.env.COOKIE_SECRET,
   maxAge: 1000 * 60 * 15,
   cookie: {
-    secure: true,
+    secure: false,
     httpOnly: true
   }
 }
