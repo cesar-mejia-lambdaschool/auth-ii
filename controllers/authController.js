@@ -12,7 +12,6 @@ module.exports = {
     const user = { email, password }
     user.password = bcrypt.hashSync(password, Number(process.env.HASH_ROUNDS))
     user.id = uuid()
-    console.log(' 🚗', user)
 
     db('local')
       .insert(user)
@@ -20,7 +19,6 @@ module.exports = {
         const id = ids[0]
         const token = generateToken({ email, id })
         req.session.token = token
-        console.log(' 🦄', token)
         res.status(201).json({ msg: 'Registration Successful!' })
       })
       .catch(next)
@@ -53,6 +51,6 @@ module.exports = {
   socialLogin: (req, res, next) => {
     const token = generateToken(req.user)
     req.session.token = token
-    res.redirect(`${process.env.CLIENT_URL}/users`)
+    res.redirect(`${process.env.CLIENT_URL}`)
   }
 }
