@@ -26,7 +26,11 @@
     "helmet": "^3.13.0",
     "jsonwebtoken": "^8.3.0",
     "knex": "^0.15.2",
-    "morgan": "^1.9.0",
+    "morgan": "^1.9.1",
+    "passport": "^0.4.0",
+    "passport-facebook": "^2.1.1",
+    "passport-github": "^1.1.0",
+    "passport-google-oauth20": "^1.0.0",
     "sqlite3": "^4.0.4"
   }
 }

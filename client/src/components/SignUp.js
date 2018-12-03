@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import SocialLinks from '../components/SocialLinks'
 axios.defaults.withCredentials = true
+const initialState = { username: '', password: '', department: '' }
+const serverAPI = 'http://localhost:8000/api'
+
 class Signup extends Component {
-  state = {
-    username: '',
-    password: '',
-    department: ''
-  }
+  state = initialState
 
   render () {
     const { username, password, department } = this.state
@@ -15,7 +15,7 @@ class Signup extends Component {
       <form
         type='submit'
         onSubmit={this.handleFormSubmit}
-        style={{ display: 'flex', flexDirection: 'column', width: '200px' }}
+        style={{ display: 'flex', flexDirection: 'column', width: '250px' }}
       >
         <label>Username: </label>
         <input
@@ -45,8 +45,9 @@ class Signup extends Component {
           style={{ marginBottom: 10, height: 20 }}
         />
         <button style={{ height: 30 }} type='submit'>
-          Signup
+          Submit
         </button>
+        <SocialLinks action='Register' />
       </form>
     )
   }
@@ -62,18 +63,10 @@ class Signup extends Component {
     e.preventDefault()
 
     axios
-      .post('http://localhost:8000/api/register', this.state)
-      .then(res => {
-        this.setState({
-          username: '',
-          password: '',
-          department: ''
-        })
-        this.props.history.push('/users')
-      })
-      .catch(err => {
-        console.error(err)
-      })
+      .post(`${serverAPI}/register`, this.state)
+      .then(res => this.setState(initialState))
+      .then(() => this.props.history.push('/users'))
+      .catch(err => console.error(err))
   }
 }
 

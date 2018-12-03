@@ -1,34 +1,39 @@
 import React, { Component } from 'react'
-import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 axios.defaults.withCredentials = true
+const serverAPI = 'http://localhost:8000/api'
 class Users extends Component {
   state = {
+    user: null,
     users: [],
     loggedIn: false,
-    fetching: true
+    loading: true
   }
 
   componentDidMount () {
-    this.setState({ fetching: true })
     axios
-      .get('http://localhost:8000/api/users')
+      .get(`${serverAPI}/users`)
       .then(res => {
-        this.setState({ users: res.data, loggedIn: true, fetching: false })
+        const { users, user } = res.data
+        this.setState({ user, users, loggedIn: true, loading: false })
       })
-      .catch(err => {
-        this.setState({ loggedIn: false, fetching: false })
-        console.error(err)
-      })
+      .catch(err => this.setState({ loggedIn: false, loading: false }))
   }
 
   render () {
-    const { users, loggedIn, fetching } = this.state
+    const { user, users, loggedIn, loading } = this.state
     return (
       <div className='Users'>
-        {!fetching && loggedIn ? (
+        {loggedIn && !loading ? (
           <div>
-            <button onClick={this.handleButtonClick}>Logout</button>
+            <button
+              style={{ marginBottom: 10 }}
+              onClick={this.handleButtonClick}
+            >
+              Logout
+            </button>
+            <br />
+            {user && <img height='100' src={user.photo} alt='profile' />}
             <ul>
               {users.map(user => (
                 <li key={user.id}>{user.username}</li>
@@ -37,14 +42,12 @@ class Users extends Component {
           </div>
         ) : (
           <div>
-            {fetching ? (
+            {loading ? (
               <h2>Loading</h2>
             ) : (
-              <div>
-                You must login to access this resource. Redirecting to /signin.
-                {this.redirect()}
-              </div>
+              <h2>Route access is restricted. Redirecting to /signin route.</h2>
             )}
+            {!loading && !loggedIn && this.redirect()}
           </div>
         )}
       </div>
@@ -55,17 +58,14 @@ class Users extends Component {
     setTimeout(() => this.props.history.push('/signin'), 3000)
   }
 
-  handleButtonClick = () => {
+  handleButtonClick = e => {
+    e.preventDefault()
     axios
-      .get('http://localhost:8000/api/logout')
-      .then(() => {
-        this.setState(
-          { loggedIn: false, users: [], fetching: false },
-          this.props.history.push('/signin')
-        )
-      })
-      .catch(err => console.log(err))
+      .get(`${serverAPI}/logout`)
+      .then(res => this.setState({ loggedIn: false, users: [], user: null }))
+      .then(() => this.props.history.push('/signin'))
+      .catch(err => console.error(err))
   }
 }
 
-export default withRouter(Users)
+export default Users

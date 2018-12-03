@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
+import SocialLinks from '../components/SocialLinks'
 import axios from 'axios'
 axios.defaults.withCredentials = true
+const initialState = { username: '', password: '' }
+const serverAPI = 'http://localhost:8000/api'
+
 class Signin extends Component {
-  state = {
-    username: '',
-    password: ''
-  }
+  state = initialState
 
   render (props) {
     const { username, password } = this.state
@@ -14,7 +15,7 @@ class Signin extends Component {
       <div className='Signin'>
         <form
           onSubmit={this.handleFormSubmit}
-          style={{ display: 'flex', flexDirection: 'column', width: '200px' }}
+          style={{ display: 'flex', flexDirection: 'column', width: '250px' }}
         >
           <label>Username:</label>
           <input
@@ -37,6 +38,7 @@ class Signin extends Component {
           <button style={{ height: 30 }} type='submit'>
             Login
           </button>
+          <SocialLinks action='Login' />
         </form>
       </div>
     )
@@ -53,10 +55,9 @@ class Signin extends Component {
     e.preventDefault()
 
     axios
-      .post('http://localhost:8000/api/login', this.state)
-      .then(res => {
-        this.props.history.push('/users')
-      })
+      .post(`${serverAPI}/login`, this.state)
+      .then(res => this.setState(initialState))
+      .then(() => this.props.history.push('/users'))
       .catch(err => {
         console.error(err)
       })
