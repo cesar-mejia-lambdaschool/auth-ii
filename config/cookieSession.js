@@ -3,5 +3,8 @@ module.exports = {
   name: 'this-is-not-a-cookie',
   secret: process.env.COOKIE_SECRET,
   maxAge: 1000 * 60 * 15,
-  secure: true
+  cookie: {
+    secure: true,
+    httpOnly: true
+  }
 }
