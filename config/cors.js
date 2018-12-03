@@ -1,1 +1,4 @@
-module.exports = { origin: 'http://localhost:3000', credentials: true }
+module.exports = {
+  origin: 'https://practical-shirley-5ebe20.netlify.com/',
+  credentials: true
+}
