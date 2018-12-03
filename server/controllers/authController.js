@@ -6,12 +6,9 @@ const bcrypt = require('bcryptjs')
 const generateToken = require('../helpers/generateToken')
 
 module.exports = {
-  // # place jwt token on req.session
-  // # req.session made available by cookie-session)
-
   registerUser: (req, res, next) => {
     const user = req.body
-    const hash = bcrypt.hashSync(user.password, 14)
+    const hash = bcrypt.hashSync(user.password, Number(process.env.HASH_ROUNDS))
     user.password = hash
 
     db('users')
@@ -44,13 +41,13 @@ module.exports = {
       .catch(next)
   },
   logoutUser: (req, res, next) => {
-    res.session = null
+    req.session = null
     req.logout()
     res.status(200).json({ msg: 'all okay' })
   },
   socialLogin: (req, res, next) => {
     const token = generateToken(req.user)
     req.session.token = token
-    res.redirect(`${process.env.CLIENT}/users`)
+    res.redirect(`${process.env.CLIENT_URL}/users`)
   }
 }

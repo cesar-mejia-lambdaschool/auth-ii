@@ -17,7 +17,7 @@ class Users extends Component {
         const { users, user } = res.data
         this.setState({ user, users, loggedIn: true, loading: false })
       })
-      .catch(err => this.setState({ loggedIn: false, loading: false }))
+      .catch(() => this.setState({ loggedIn: false, loading: false }))
   }
 
   render () {
@@ -62,7 +62,9 @@ class Users extends Component {
     e.preventDefault()
     axios
       .get(`${serverAPI}/logout`)
-      .then(res => this.setState({ loggedIn: false, users: [], user: null }))
+      .then(res =>
+        this.setState({ loggedIn: false, users: [], user: null, loading: true })
+      )
       .then(() => this.props.history.push('/signin'))
       .catch(err => console.error(err))
   }
