@@ -4,7 +4,7 @@ const db = require('../data/db')
 module.exports = {
   clientID: process.env.GOOGLE_CLIENT_ID,
   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-  callbackURL: 'http://localhost:8000/api/auth/google/callback',
+  callbackURL: process.env.GOOGLE_CB,
   verifyCallback: (accessToken, refreshToken, profile, done) => {
     const {
       id,
@@ -31,9 +31,7 @@ module.exports = {
               email,
               photo
             })
-            .then(id =>
-              done(null, { id, givenName, familyName, emails, photo })
-            )
+            .then(id => done(null, { id, givenName, familyName, emails, photo }))
             .catch(err => done(err, false))
         }
       })

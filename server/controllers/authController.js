@@ -48,6 +48,6 @@ module.exports = {
   socialLogin: (req, res, next) => {
     const token = generateToken(req.user)
     req.session.token = token
-    res.redirect('http://localhost:3000/users')
+    res.redirect(`${process.env.CLIENT}/users`)
   }
 }

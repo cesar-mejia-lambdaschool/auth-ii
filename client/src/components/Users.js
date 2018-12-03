@@ -28,7 +28,7 @@ class Users extends Component {
       <div className='Users'>
         {loggedIn && !loading ? (
           <div>
-            <button onClick={this.handleButtonClick}>Logout</button>
+            <button style={{marginBottom: 10}} onClick={this.handleButtonClick}>Logout</button>
             <br />
             {user && <img height='100' src={user.photo} alt='profile' />}
             <ul>

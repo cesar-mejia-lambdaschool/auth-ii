@@ -1,1 +1,3 @@
-module.exports = { origin: 'http://localhost:3000', credentials: true }
+require('dotenv').config()
+
+module.exports = { origin: process.env.CLIENT, credentials: true }

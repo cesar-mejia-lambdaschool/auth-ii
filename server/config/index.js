@@ -6,6 +6,7 @@ const gitHubStrategy = require('./gitHubStrategy')
 const googleStrategy = require('./googleStrategy')
 const facebookStrategy = require('./facebookStrategy')
 const corsWhitelistWithCredentials = require('./corsWhitelistWithCredentials')
+
 module.exports = {
   knexSessionStore,
   cookieSession,

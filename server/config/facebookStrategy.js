@@ -4,7 +4,7 @@ const db = require('../data/db')
 module.exports = {
   clientID: process.env.FACEBOOK_APP_ID,
   clientSecret: process.env.FACEBOOK_APP_SECRET,
-  callbackURL: 'http://localhost:8000/api/auth/facebook/callback',
+  callbackURL: process.env.FACEBOOK_CB,
   profileFields: ['id', 'displayName', 'name', 'emails', 'photos'],
   verifyCallback: (accessToken, refreshToken, profile, done) => {
     const {
