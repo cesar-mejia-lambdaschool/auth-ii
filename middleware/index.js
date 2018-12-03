@@ -16,7 +16,7 @@ module.exports = server => {
   server.use(express.json())
   server.use(logger('dev'))
   server.use(helmet())
-  server.use(cors())
+  server.use(cors(config.corsWhitelistWithCredentials))
   server.use(cookieSession(config.cookieSession))
   server.use(apiLimiter)
   server.use(passport.initialize())
