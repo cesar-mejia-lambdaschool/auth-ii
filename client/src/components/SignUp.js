@@ -2,12 +2,9 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import SocialLinks from '../components/SocialLinks'
 axios.defaults.withCredentials = true
+const initialState = { username: '', password: '', department: '' }
 class Signup extends Component {
-  state = {
-    username: '',
-    password: '',
-    department: ''
-  }
+  state = initialState
 
   render () {
     const { username, password, department } = this.state
@@ -64,18 +61,10 @@ class Signup extends Component {
     e.preventDefault()
 
     axios
-      .post('http://localhost:8000/api/register', this.state)
-      .then(res => {
-        this.setState({
-          username: '',
-          password: '',
-          department: ''
-        })
-        this.props.history.push('/users')
-      })
-      .catch(err => {
-        console.error(err)
-      })
+      .post(`${process.env.REACT_APP_SERVER_API}/register`, this.state)
+      .then(res => this.setState(initialState))
+      .then(() => this.props.history.push('/users'))
+      .catch(err => console.error(err))
   }
 }
 

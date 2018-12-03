@@ -2,24 +2,23 @@ import React, { Component } from 'react'
 import { withRouter } from 'react-router-dom'
 import axios from 'axios'
 axios.defaults.withCredentials = true
+const initialState
 class Users extends Component {
   state = {
-    users: [],
     user: null,
+    users: [],
     loggedIn: false,
     loading: true
   }
 
   componentDidMount () {
     axios
-      .get('http://localhost:8000/api/users')
+      .get(`${process.env.REACT_APP_SERVER_API}/users`)
       .then(res => {
         const { users, user } = res.data
-        this.setState({ users, loggedIn: true, user, loading: false })
+        this.setState({ user, users, loggedIn: true, loading: false })
       })
-      .catch(err => {
-        this.setState({ loading: false, loggedIn: false })
-      })
+      .catch(err => this.setState({ loggedIn: false, loading: false }))
   }
 
   render () {
@@ -28,7 +27,9 @@ class Users extends Component {
       <div className='Users'>
         {loggedIn && !loading ? (
           <div>
-            <button style={{marginBottom: 10}} onClick={this.handleButtonClick}>Logout</button>
+            <button style={{ marginBottom: 10 }} onClick={this.handleButtonClick}>
+              Logout
+            </button>
             <br />
             {user && <img height='100' src={user.photo} alt='profile' />}
             <ul>
@@ -58,10 +59,8 @@ class Users extends Component {
   handleButtonClick = e => {
     e.preventDefault()
     axios
-      .get('http://localhost:8000/api/logout')
-      .then(res => {
-        this.setState({ loggedIn: false, users: [], user: null })
-      })
+      .get(`${process.env.REACT_APP_SERVER_API}/logout`)
+      .then(res => this.setState({ loggedIn: false, users: [], user: null }))
       .then(() => this.props.history.push('/signin'))
       .catch(err => console.error(err))
   }
