@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios'
 import SocialLinks from '../components/SocialLinks'
 axios.defaults.withCredentials = true
-const initialState = { username: '', password: '', department: '' }
+const initialState = { email: '', password: '' }
 // const serverAPI = 'http://localhost:8000/api'
 const serverAPI = 'https://guarded-sands-18679.herokuapp.com/api'
 class Signup extends Component {
