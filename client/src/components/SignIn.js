@@ -6,7 +6,7 @@ axios.defaults.withCredentials = true
 const serverAPI = 'https://guarded-sands-18679.herokuapp.com/api'
 const initialState = { email: '', password: '' }
 
-class Signin extends Component {
+class SignIn extends Component {
   state = initialState
 
   render (props) {
@@ -63,4 +63,4 @@ class Signin extends Component {
   }
 }
 
-export default Signin
+export default SignIn

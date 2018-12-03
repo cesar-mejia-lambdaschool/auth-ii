@@ -8,7 +8,7 @@ const {
   socialLogin
 } = require('../controllers/authController')
 // const redirectURL = 'http://localhost:3000/signin'
-const redirectURL = 'https://practical-shirley-5ebe20.netlify.com/signin'
+const redirectURL = 'https://practical-shirley-5ebe20.netlify.com/'
 //* Local Middleware
 const checkCredentials = require('../middleware/checkCredentials')
 
