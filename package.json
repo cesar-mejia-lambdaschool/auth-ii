@@ -4,7 +4,7 @@
   "description": "auth with jwt + react",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon"
+    "start": "node"
   },
   "repository": {
     "type": "git",
@@ -31,6 +31,7 @@
     "passport-facebook": "^2.1.1",
     "passport-github": "^1.1.0",
     "passport-google-oauth20": "^1.0.0",
-    "pg": "^7.7.1"
+    "pg": "^7.7.1",
+    "uuid": "^3.3.2"
   }
 }

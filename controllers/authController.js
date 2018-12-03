@@ -1,35 +1,40 @@
 require('dotenv').config()
 const db = require('../data/db')
 const bcrypt = require('bcryptjs')
+const uuid = require('uuid/v4')
 
 //* Generate token
 const generateToken = require('../helpers/generateToken')
 
 module.exports = {
-  registerUser: (req, res, next) => {
-    const user = req.body
-    const hash = bcrypt.hashSync(user.password, Number(process.env.HASH_ROUNDS))
-    user.password = hash
+  register: (req, res, next) => {
+    const { email, password } = req.body
+    const user = { email, password }
+    user.password = bcrypt.hashSync(password, Number(process.env.HASH_ROUNDS))
+    user.id = uuid()
+    console.log(' 🚗', user)
 
-    db('users')
+    db('local')
       .insert(user)
       .then(ids => {
-        const token = generateToken(user)
+        const id = ids[0]
+        const token = generateToken({ email, id })
         req.session.token = token
+        console.log(' 🦄', token)
         res.status(201).json({ msg: 'Registration Successful!' })
       })
       .catch(next)
   },
-  loginUser: (req, res, next) => {
-    let { username, password } = req.body
-    username = username.toLowerCase()
+  login: (req, res, next) => {
+    let { email, password } = req.body
+    // TODO: Implement JOI for validation
 
-    db('users')
-      .where({ username })
+    db('local')
+      .where({ email })
       .first()
       .then(user => {
-        bcrypt.compare(password, user.password).then(isPasswordValid => {
-          if (isPasswordValid) {
+        bcrypt.compare(password, user.password).then(isValid => {
+          if (isValid) {
             const token = generateToken(user)
             req.session.token = token
             res.status(200).json({ msg: 'login successful' })
@@ -40,7 +45,7 @@ module.exports = {
       })
       .catch(next)
   },
-  logoutUser: (req, res, next) => {
+  logout: (req, res, next) => {
     req.session = null
     req.logout()
     res.status(200).json({ msg: 'all okay' })

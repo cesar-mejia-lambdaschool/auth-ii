@@ -1,9 +1,10 @@
 const router = require('express').Router()
+
 const passport = require('passport')
 const {
-  registerUser,
-  loginUser,
-  logoutUser,
+  register,
+  login,
+  logout,
   socialLogin
 } = require('../controllers/authController')
 const redirectURL = 'http://localhost:3000/signin'
@@ -12,8 +13,8 @@ const redirectURL = 'http://localhost:3000/signin'
 const checkCredentials = require('../middleware/checkCredentials')
 
 //* Routes
-router.post('/login', loginUser)
-router.post('/register', checkCredentials, registerUser)
+router.post('/login', login)
+router.post('/register', checkCredentials, register)
 //* GitHub OAuth
 router.get('/auth/github', passport.authenticate('github'))
 router.get(
@@ -48,8 +49,6 @@ router.get(
   socialLogin
 )
 //* Destroy cookie session & req.user
-router.get('/logout', logoutUser)
-
-router.get('/logout', logoutUser)
+router.get('/logout', logout)
 
 module.exports = router

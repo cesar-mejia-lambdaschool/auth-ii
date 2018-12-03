@@ -17,7 +17,11 @@ class Users extends Component {
         const { users, user } = res.data
         this.setState({ user, users, loggedIn: true, loading: false })
       })
-      .catch(() => this.setState({ loggedIn: false, loading: false }))
+      .catch(err =>
+        this.setState({ loggedIn: false, loading: false }, () =>
+          console.error(err)
+        )
+      )
   }
 
   render () {
