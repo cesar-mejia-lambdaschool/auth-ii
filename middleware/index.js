@@ -17,7 +17,7 @@ module.exports = server => {
   server.use(logger('dev'))
   server.use(helmet())
   server.use((req, res, next) => {
-    res.header('Access-Control-Allow-Origin', CLIENT_ORIGIN)
+    res.header('Access-Control-Allow-Origin', process.env.CLIENT_URL)
     res.header(
       'Access-Control-Allow-Headers',
       'Origin, X-Requested-With, Content-Type, Accept'
