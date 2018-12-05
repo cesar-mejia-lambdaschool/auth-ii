@@ -22,16 +22,19 @@ module.exports = {
         if (user && user.id) {
           return done(null, user)
         } else {
+          const newUser = {
+            id,
+            givenName,
+            familyName,
+            displayName,
+            email,
+            photo
+          }
           db('google')
-            .insert({
-              id,
-              givenName,
-              familyName,
-              displayName,
-              email,
-              photo
-            })
-            .then(id => done(null, { id, givenName, familyName, emails, photo }))
+            .insert(newUser)
+            .then(id =>
+              done(null, { id, givenName, familyName, emails, photo })
+            )
             .catch(err => done(err, false))
         }
       })

@@ -1,9 +1,9 @@
-const config = require('./index')
-const GitHubStrategy = require('passport-github').Strategy
-const FacebookStrategy = require('passport-facebook').Strategy
-const GoogleStrategy = require('passport-google-oauth20').Strategy
-
 module.exports = passport => {
+  const config = require('./index.js')
+  const GitHubStrategy = require('passport-github').Strategy
+  const FacebookStrategy = require('passport-facebook').Strategy
+  const GoogleStrategy = require('passport-google-oauth20').Strategy
+
   passport.use(
     new GitHubStrategy(
       {

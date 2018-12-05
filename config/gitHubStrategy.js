@@ -16,15 +16,16 @@ module.exports = {
         if (user && user.id) {
           return done(null, user)
         } else {
+          const newUser = {
+            id,
+            username,
+            displayName,
+            email,
+            photo
+          }
           db('github')
-            .insert({
-              id,
-              username,
-              displayName,
-              email,
-              photo
-            })
-            .then(id => done(null, profile))
+            .insert(newUser)
+            .then(id => done(null, newUser))
             .catch(err => done(err, false))
         }
       })

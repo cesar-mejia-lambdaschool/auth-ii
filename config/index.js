@@ -6,6 +6,7 @@ const gitHubStrategy = require('./gitHubStrategy')
 const googleStrategy = require('./googleStrategy')
 const facebookStrategy = require('./facebookStrategy')
 const corsWhitelistWithCredentials = require('./corsWhitelistWithCredentials')
+const passportConfig = require('./passportConfig')
 
 module.exports = {
   knexSessionStore,
@@ -15,5 +16,6 @@ module.exports = {
   gitHubStrategy,
   googleStrategy,
   facebookStrategy,
-  corsWhitelistWithCredentials
+  corsWhitelistWithCredentials,
+  passportConfig
 }

@@ -24,16 +24,17 @@ module.exports = {
         if (user && user.id) {
           return done(null, user)
         } else {
+          const newUser = {
+            id,
+            givenName,
+            familyName,
+            displayName,
+            email,
+            photo
+          }
           db('facebook')
-            .insert({
-              id,
-              givenName,
-              familyName,
-              displayName,
-              email,
-              photo
-            })
-            .then(id => done(null, profile))
+            .insert(newUser)
+            .then(id => done(null, newUser))
             .catch(err => done(err, false))
         }
       })
