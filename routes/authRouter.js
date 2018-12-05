@@ -1,3 +1,4 @@
+require('dotenv').config()
 const router = require('express').Router()
 
 const passport = require('passport')
@@ -7,8 +8,8 @@ const {
   logout,
   socialLogin
 } = require('../controllers/authController')
-const redirectURL = 'http://localhost:3000/signin'
-// const redirectURL = 'https://authii.netlify.com/signin'
+// const redirectURL = 'http://localhost:3000/signin'
+const redirectURL = `${process.env.CLIENT_URL}/signin`
 //* Local Middleware
 const checkCredentials = require('../middleware/checkCredentials')
 
