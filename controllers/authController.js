@@ -48,9 +48,10 @@ module.exports = {
     req.logout()
     res.status(200).json({ msg: 'all okay' })
   },
+
   socialLogin: (req, res, next) => {
     const token = generateToken(req.user)
     req.session.token = token
-    res.redirect(`${process.env.CLIENT_URL}`)
+    res.redirect(`${process.env.CLIENT_URL}/users`)
   }
 }
