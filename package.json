@@ -4,7 +4,7 @@
   "description": "auth with jwt + react",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",

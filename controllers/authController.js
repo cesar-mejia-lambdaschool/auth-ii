@@ -9,6 +9,7 @@ const generateToken = require('../helpers/generateToken')
 module.exports = {
   register: (req, res, next) => {
     const { email, password } = req.body
+    console.log('dsjfljsdlfJI', req.session)
     const user = { email, password }
     user.password = bcrypt.hashSync(password, Number(process.env.HASH_ROUNDS))
     user.id = uuid()
