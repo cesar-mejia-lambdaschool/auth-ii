@@ -38,13 +38,10 @@ module.exports = passport => {
     )
   )
   passport.serializeUser((user, done) => {
-    console.log('\n ', 'DDDDDlaunched serialize', user.id)
-
-    done(null, user.id)
+    done(null, user)
   })
 
-  passport.deserializeUser((obj, done) => {
-    console.log('\n ', 'DDDDlaunched deserialize', obj)
-    done(null, obj)
+  passport.deserializeUser((user, done) => {
+    done(null, user)
   })
 }

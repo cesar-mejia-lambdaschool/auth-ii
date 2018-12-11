@@ -1,6 +1,4 @@
-const knexSessionStore = require('./knexSessionStore')
 const cookieSession = require('./cookieSession')
-const expressSession = require('./expressSession')
 const rateLimit = require('./rateLimit')
 const gitHubStrategy = require('./gitHubStrategy')
 const googleStrategy = require('./googleStrategy')
@@ -9,9 +7,7 @@ const corsWhitelistWithCredentials = require('./corsWhitelistWithCredentials')
 const passportConfig = require('./passportConfig')
 
 module.exports = {
-  knexSessionStore,
   cookieSession,
-  expressSession,
   rateLimit,
   gitHubStrategy,
   googleStrategy,
