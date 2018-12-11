@@ -3,7 +3,7 @@ const errorHandler = require('./helpers/errorHandler')
 
 //* Middleware & Routes
 require('./middleware')(server)
-require('./routes')(server)
+require('./controllers')(server)
 
 //* Error Handler
 server.use(errorHandler)

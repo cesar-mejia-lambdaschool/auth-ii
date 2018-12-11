@@ -1,5 +1,5 @@
 // TODO: Think seriously regarding how to gracefully manage
-// TODO: multiple auth strategies for a each user
+// TODO: multiple auth strategies for a single user
 
 exports.up = function (knex, Promise) {
   return knex.schema
@@ -54,7 +54,7 @@ exports.up = function (knex, Promise) {
         table.string('givenName')
         table.string('familyName ')
         table.string('displayName')
-        table.string('email')
+        table.string('email').unique()
         table.string('photo')
         table.timestamps(true, true)
       })
@@ -63,6 +63,8 @@ exports.up = function (knex, Promise) {
       return knex.schema.createTable('user_details', table => {
         table.uuid('id').primary()
         table.string('displayName').notNull()
+        table.string('email').unique()
+        table.string('photo')
         table
           .uuid('localId')
           .references('id')

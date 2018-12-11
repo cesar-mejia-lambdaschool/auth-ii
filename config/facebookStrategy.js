@@ -22,7 +22,10 @@ module.exports = {
       .first()
       .then(user => {
         if (user && user.id) {
-          return done(null, user)
+          db('user_details')
+            .where({ facebookId: user.id })
+            .first()
+            .then(userDetails => done(null, user))
         } else {
           const newUser = {
             id,
